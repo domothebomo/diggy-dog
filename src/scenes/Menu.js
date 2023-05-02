@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         this.load.audio('footsteps', './assets/footsteps.wav');
+        this.load.audio('bark_4', './assets/dogbark_04.mp3');
+        this.load.audio('digging', './assets/digging.mp3');
     }
 
     create() {
