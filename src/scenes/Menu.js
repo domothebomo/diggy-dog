@@ -8,6 +8,10 @@ class Menu extends Phaser.Scene {
         this.load.audio('footsteps', './assets/footsteps.wav');
         this.load.audio('bark_4', './assets/dogbark_04.mp3');
         this.load.audio('digging', './assets/digging.mp3');
+        this.load.audio('alert', './assets/alert.wav');
+        this.load.audio('jingle', './assets/jingle.mp3');
+        this.load.audio('bad_item', './assets/bad_item.wav');
+        this.load.audio('victory', './assets/victory.wav');
     }
 
     create() {
