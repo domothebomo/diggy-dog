@@ -6,7 +6,6 @@ let config = {
     zoom: 1,
     physics: {
         default: 'arcade',
-        //debugger: true
         arcade: {
             checkCollision: {
                 up: true,
@@ -21,12 +20,5 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-//let keyUP, keyDOWN, keyLEFT, keyRIGHT;
 let cursors;
 let keySPACE, keyESC;
-//let movingX;
-//let movingY;
-
-// set UI sizes
-//let borderUISize = game.config.height / 15;
-//let borderPadding = borderUISize / 3;

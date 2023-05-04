@@ -1,4 +1,3 @@
-//const { Textures } = require("phaser");
 
 class Play extends Phaser.Scene {
     constructor() {
@@ -6,7 +5,6 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        //this.load.image('player', './assets/justaguy.png');
         this.load.image('foodbowl', './assets/foodbowl.png');
         this.load.image('bone', './assets/bone.png');
         this.load.image('banana', './assets/banana_peel.png');
@@ -16,9 +14,12 @@ class Play extends Phaser.Scene {
 
         this.load.image('dirt', './assets/dirt_mound.png');
         this.load.image('grass', './assets/grass.png');
-        this.load.image('fence', './assets/fence-export.png');
-        this.load.image('tree', './assets/tree-export.png');
-        this.load.image('pond', './assets/pond-export.png');
+        this.load.image('fence', './assets/fence.png');
+        this.load.image('tree', './assets/tree.png');
+        this.load.image('pond', './assets/pond.png');
+
+        this.load.image('failure', './assets/failure.png');
+        this.load.image('success', './assets/victory.png');
 
         // Player dog
         this.load.spritesheet('dog_idle', './assets/dog_idle.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
@@ -40,93 +41,94 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        //this.add.text(game.config.width / 2, game.config.height / 2, 'PLAY');
-        //this.player = new Player(this, game.config.width / 2, game.config.height / 2, 'dog_idle', 0).setOrigin(0.5, 0.5);
 
         this.grass = this.add.tileSprite(0, 0, 720, 640, 'grass').setOrigin(0, 0);
         this.fence = this.add.tileSprite(0, 0, 720, 640, 'fence').setOrigin(0, 0);
-        //this.pond = this.add.tileSprite(0, 0, 720, 640, 'pond').setOrigin(0, 0);
-        //this.tree = this.add.tileSprite(0, 0, 720, 640, 'tree').setOrigin(0, 0);
 
         // ANIMATIONS
 
         if (!this.anims.exists('idle')) {
-        // PLAYER
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('dog_idle', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNumbers('dog_walk', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'dig',
-            frames: this.anims.generateFrameNumbers('dog_dig', {start: 0, end: 2, first: 0}),
-            frameRate: 3,
-            repeat: 2
-        });
-        this.anims.create({
-            key: 'bark',
-            frames: this.anims.generateFrameNumbers('dog_bark', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: 3
-        });
+            // PLAYER
+            this.anims.create({
+                key: 'idle',
+                frames: this.anims.generateFrameNumbers('dog_idle', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'walk',
+                frames: this.anims.generateFrameNumbers('dog_walk', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'dig',
+                frames: this.anims.generateFrameNumbers('dog_dig', {start: 0, end: 2, first: 0}),
+                frameRate: 3,
+                repeat: 2
+            });
+            this.anims.create({
+                key: 'bark',
+                frames: this.anims.generateFrameNumbers('dog_bark', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: 3
+            });
 
-        // BROWN DOG
-        this.anims.create({
-            key: 'idle2',
-            frames: this.anims.generateFrameNumbers('dog2_idle', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walk2',
-            frames: this.anims.generateFrameNumbers('dog2_walk', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'bark2',
+            // BROWN DOG
+            this.anims.create({
+                key: 'idle2',
+                frames: this.anims.generateFrameNumbers('dog2_idle', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'walk2',
+                frames: this.anims.generateFrameNumbers('dog2_walk', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'bark2',
             frames: this.anims.generateFrameNumbers('dog2_bark', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: 3
-        });
+                frameRate: 3,
+                repeat: 3
+            });
 
-        // BEIGE DOG
-        this.anims.create({
-            key: 'idle3',
-            frames: this.anims.generateFrameNumbers('dog3_idle', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walk3',
-            frames: this.anims.generateFrameNumbers('dog3_walk', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'bark3',
-            frames: this.anims.generateFrameNumbers('dog3_bark', {start: 0, end: 1, first: 0}),
-            frameRate: 3,
-            repeat: 3
-        });
+            // BEIGE DOG
+            this.anims.create({
+                key: 'idle3',
+                frames: this.anims.generateFrameNumbers('dog3_idle', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'walk3',
+                frames: this.anims.generateFrameNumbers('dog3_walk', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'bark3',
+                frames: this.anims.generateFrameNumbers('dog3_bark', {start: 0, end: 1, first: 0}),
+                frameRate: 3,
+                repeat: 3
+            });
         
 
-        // EXTRA
-        this.anims.create({
-            key: 'alert',
-            frames: this.anims.generateFrameNumbers('question_mark', {start: 0, end: 2, first: 0}),
-            frameRate: 3,
-        });
+            // EXTRA
+            this.anims.create({
+                key: 'alert',
+                frames: this.anims.generateFrameNumbers('question_mark', {start: 0, end: 2, first: 0}),
+                frameRate: 3,
+            });
         }
 
         // SOUNDS
+        this.music = this.sound.add("music", {
+            volume: 0.5,
+            loop: true
+        });
+
         this.footsteps = this.sound.add("footsteps", {
             volume: 1,
             loop: true
@@ -141,6 +143,10 @@ class Play extends Phaser.Scene {
         });
 
         this.victory = this.sound.add("victory", {
+            volume: 0.5
+        });
+
+        this.defeat = this.sound.add("defeat", {
             volume: 0.5
         });
 
@@ -186,9 +192,6 @@ class Play extends Phaser.Scene {
             this.treasures[i].x = Math.floor(Math.random() * 500) + 75;
             this.treasures[i].y = Math.floor(Math.random() * 450) + 150;
         }
-        //this.treasure.onOverlap = true;
-        //this.nearTreasure = false;
-        //this.treasuresNear = 0;
         
         this.pond = this.add.tileSprite(0, 0, 720, 640, 'pond').setOrigin(0, 0);
 
@@ -199,8 +202,6 @@ class Play extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.digging = false;
         this.distracted = false;
-        //this.player.onOverlap = true;
-        //this.player.anims.play('idle');
 
         // BROWN DOG
         this.dog1 = this.physics.add.sprite(100, 500, 'dog2_idle');
@@ -225,16 +226,6 @@ class Play extends Phaser.Scene {
         this.notif = this.add.sprite(this.player.x, this.player.y - this.player.height, 'question_mark');
         this.notif.alpha = 0;
 
-        this.timer = this.time.delayedCall(60000, () => {
-            
-        }, null, this);
-
-        // COLLISION
-        //this.physics.add.collider(this.player, this.dog1);
-        //this.physics.world.on('overlap', () => {console.log('gah')});
-
-        //this.treasure = this.physics.add.sprite(game.config.width / 2 + 200, game.config.height / 2, 'foodbowl')
-
         // TREE BASE
         this.stump = this.physics.add.sprite(150, 290, 'dirt');
         this.stump.alpha = 0;
@@ -242,78 +233,75 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.stump);
         this.tree = this.add.tileSprite(0, 0, 720, 640, 'tree').setOrigin(0, 0);
 
+        // TIMER
         this.clock = this.time.delayedCall(60000, () => {this.Lose()}, null, this);
 
+        // DISPLAY TEXT
         let gameConfig = {
             fontFamily: 'Courier',
             fontSize: '18px',
             color: '#000000',
             backgroundColor: '#FFFFFF',
-            align: 'center',
+            align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 0
+            fixedWidth: 275
         };
         this.timeDisplay = this.add.text(game.config.width - 285, 10, "PARK CLOSES IN "+this.clock.delay / 1000+" SECONDS", gameConfig);
+        gameConfig.align = 'left';
         this.escText = this.add.text(10, 10, "(ESC) TO RETURN TO MENU", gameConfig);
 
         this.gameOver = false;
-    
+        this.music.play();
     }
 
     update() {
-        if (!this.gameOver) {
-            this.timeDisplay.text = "PARK CLOSES IN "+Math.ceil((this.clock.delay - this.clock.elapsed) / 1000)+" SECONDS";
-        }
+        this.timeDisplay.text = "PARK CLOSES IN "+Math.ceil((this.clock.delay - this.clock.elapsed) / 1000)+" SECONDS";
 
         if (Phaser.Input.Keyboard.JustDown(keyESC)) {
+            this.music.stop();
             this.scene.start('menuScene');
         }
 
-        //this.player.anims.play('idle');
-        //this.player.update();
-        //this.movingX = false;
-        //this.movingY = false;
-
         // PLAYER CONTROL
         if (!this.gameOver) {
-        let playerDirection = new Phaser.Math.Vector2(0, 0);
-        if (!this.digging && !this.player.distracted) {
-        if(cursors.left.isDown) {
-            playerDirection.x = -1;
-            this.player.setFlip(true, false);
-        }
-        if(cursors.right.isDown) {
-            playerDirection.x = 1;
-            this.player.resetFlip();
-        }
-        if(cursors.up.isDown) {
-            playerDirection.y = -1;
-        }
-        if(cursors.down.isDown) {
-            playerDirection.y = 1;
-        }
+            let playerDirection = new Phaser.Math.Vector2(0, 0);
+            if (!this.digging && !this.player.distracted) {
+                if(cursors.left.isDown) {
+                    playerDirection.x = -1;
+                    this.player.setFlip(true, false);
+                }
+                if(cursors.right.isDown) {
+                    playerDirection.x = 1;
+                    this.player.resetFlip();
+                }
+                if(cursors.up.isDown) {
+                    playerDirection.y = -1;
+                }
+                if(cursors.down.isDown) {
+                    playerDirection.y = 1;
+                }
         
-        if (playerDirection.x != 0 || playerDirection.y != 0) {
-            this.player.anims.play('walk', true);
-            if (this.walking === false) {
-                this.footsteps.play();
-                this.walking = true;
+                if (playerDirection.x != 0 || playerDirection.y != 0) {
+                    this.player.anims.play('walk', true);
+                    if (this.walking === false) {
+                        this.footsteps.play();
+                        this.walking = true;
+                    }
+                } else {
+                    this.player.anims.play('idle', true);
+                    this.footsteps.stop();
+                    this.walking = false;
+                }
             }
-        } else {
-            this.player.anims.play('idle', true);
-            this.footsteps.stop();
-            this.walking = false;
-        }
-        }
-        playerDirection.normalize();
-        this.player.setVelocity(playerDirection.x * this.moveSpeed, playerDirection.y * this.moveSpeed);
+            playerDirection.normalize();
+            this.player.setVelocity(playerDirection.x * this.moveSpeed, playerDirection.y * this.moveSpeed);
         }
 
         // BROWN DOG UPDATE
-        if (!this.dog1.alerted) {
+        if (!this.gameOver && !this.dog1.alerted) {
             if (this.dog1.moveSpeed != 0) {
                 this.dog1.anims.play('walk2', true);
                 this.dog1.setVelocity(this.dog1.direction * this.dog1.moveSpeed, 0);
@@ -343,7 +331,7 @@ class Play extends Phaser.Scene {
                 }, null, this);
             }   
         }
-        if (this.checkNear(this.player, this.dog1) && !this.dog1.alerted) {
+        if (!this.gameOver && this.checkNear(this.player, this.dog1) && !this.dog1.alerted) {
             if (this.dog1.x > this.player.x) {
                 this.dog1.setFlip(true, false);
                 if (this.player.flipX == true) {
@@ -373,7 +361,7 @@ class Play extends Phaser.Scene {
         }
 
         // BEIGE DOG UPDATE
-        if (!this.dog2.alerted) {
+        if (!this.gameOver && !this.dog2.alerted) {
             if (this.dog2.moveSpeed != 0) {
                 this.dog2.anims.play('walk3', true);
                 this.dog2.setVelocity(this.dog2.direction * this.dog2.moveSpeed, 0);
@@ -403,7 +391,7 @@ class Play extends Phaser.Scene {
                 }, null, this);
             }   
         }
-        if (this.checkNear(this.player, this.dog2) && !this.dog2.alerted) {
+        if (!this.gameOver && this.checkNear(this.player, this.dog2) && !this.dog2.alerted) {
             if (this.dog2.x > this.player.x) {
                 this.dog2.setFlip(true, false);
                 if (this.player.flipX == true) {
@@ -435,51 +423,39 @@ class Play extends Phaser.Scene {
 
         // TREASURE UPDATING
         for (let i = 0; i < this.treasures.length; i++) {
-        if (!this.player.distracted && this.checkCollision(this.player, this.treasures[i]) && !this.treasures[i].found) {
-            if (!this.treasures[i].near) {
-                this.alert.play();
-                this.treasures[i].near = true;
-                //this.nearTreasure = true;
-                //let alert = this.add.sprite(this.player.x, this.player.y - this.player.height, 'question_mark');
-                this.notif.alpha = 1;
-                this.notif.anims.play('alert');
+            if (!this.gameOver && !this.player.distracted && this.checkCollision(this.player, this.treasures[i]) && !this.treasures[i].found) {
+                if (!this.treasures[i].near) {
+                    this.alert.play();
+                    this.treasures[i].near = true;
+                    this.notif.alpha = 1;
+                    this.notif.anims.play('alert');
+                }
+                this.notif.x = this.player.x;
+                this.notif.y = this.player.y - this.player.height / 1.5;
+
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                    this.dig.play();
+                    this.player.anims.play('dig', true);
+                    this.digging = true;
+                    this.treasures[i].found = true;
+                    this.digTime = this.time.delayedCall(1500, () => {
+                        this.digging = false;
+                        this.treasures[i].alpha = 1;
+                        this.treasures[i].near = false;
+
+                        this.currentTreasure = this.add.sprite(this.player.x, this.player.y - this.player.height / 1.5, this.treasures[i].identity);
+                        if (this.treasures[i].identity == 'bone') {
+                            this.Win();
+                        } else {
+                            this.badItem.play();
+                        }
+
+                    }, null, this);
+                }
+
+            } else {
+                this.treasures[i].near = false;
             }
-            this.notif.x = this.player.x;
-            this.notif.y = this.player.y - this.player.height / 1.5;
-
-            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-                this.dig.play();
-                this.player.anims.play('dig', true);
-                //this.player.body.immovable = true;
-                this.digging = true;
-                this.treasures[i].found = true;
-                this.digTime = this.time.delayedCall(1500, () => {
-                    //console.log('bruh');
-                    this.digging = false;
-                    this.treasures[i].alpha = 1;
-                    //this.treasures[i].found = true;
-                    //this.nearTreasure = false;
-                    this.treasures[i].near = false;
-                    //this.player.body.immovable = false;
-
-                    this.currentTreasure = this.add.sprite(this.player.x, this.player.y - this.player.height / 1.5, this.treasures[i].identity);
-                    if (this.treasures[i].identity == 'bone') {
-                        this.victory.play();
-                        this.Win();
-                    } else {
-                        this.badItem.play();
-                    }
-
-                }, null, this);
-            }
-
-            //console.log('bruh');
-        } else {
-            //this.nearTreasure = false;
-            this.treasures[i].near = false;
-            //this.notif.alpha = 0;
-            //this.alert.destroy();
-        }
         }
 
         this.nearTreasure = false;
@@ -494,11 +470,24 @@ class Play extends Phaser.Scene {
     }
 
     Win() {
-        this.gameOver = true;
+        if (!this.gameOver) {
+            this.music.stop();
+            this.victory.play();
+            this.gameOver = true;
+            this.add.sprite(game.config.width / 2, game.config.height / 2, 'success');
+            this.player.anims.play('idle', true);
+        }
     }
 
     Lose() {
-        this.gameOver = true;
+        if (!this.gameOver) {
+            this.music.stop();
+            this.defeat.play();
+            this.player.setVelocity(0, 0);
+            this.gameOver = true;
+            this.add.sprite(game.config.width / 2, game.config.height / 2, 'failure');
+            this.player.anims.play('idle', true);
+        }
     }
 
     checkCollision(player, treasure) {
