@@ -23,7 +23,7 @@ let game = new Phaser.Game(config);
 
 //let keyUP, keyDOWN, keyLEFT, keyRIGHT;
 let cursors;
-let keySPACE;
+let keySPACE, keyESC;
 //let movingX;
 //let movingY;
 

@@ -13,14 +13,29 @@ class Play extends Phaser.Scene {
         this.load.image('apple', './assets/apple_core.png');
         this.load.image('fishbone', './assets/fish_bone.png');
         this.load.image('sock', './assets/dirty_sock.png');
-        this.load.image('dirt', './assets/dirt_mound.png');
 
+        this.load.image('dirt', './assets/dirt_mound.png');
         this.load.image('grass', './assets/grass.png');
         this.load.image('fence', './assets/fence-export.png');
+        this.load.image('tree', './assets/tree-export.png');
+        this.load.image('pond', './assets/pond-export.png');
 
+        // Player dog
         this.load.spritesheet('dog_idle', './assets/dog_idle.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
         this.load.spritesheet('dog_walk', './assets/dog_walk.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
         this.load.spritesheet('dog_dig', './assets/dog_dig.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('dog_bark', './assets/dog_bark.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+
+        // Brown dog
+        this.load.spritesheet('dog2_idle', './assets/brown_idle.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('dog2_walk', './assets/brown_walk.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('dog2_bark', './assets/brown_bark.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+
+        // Beige dog
+        this.load.spritesheet('dog3_idle', './assets/beige_idle.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('dog3_walk', './assets/beige_walk.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('dog3_bark', './assets/beige_bark.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+
         this.load.spritesheet('question_mark', './assets/question_mark.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 2});
     }
 
@@ -29,35 +44,87 @@ class Play extends Phaser.Scene {
         //this.player = new Player(this, game.config.width / 2, game.config.height / 2, 'dog_idle', 0).setOrigin(0.5, 0.5);
 
         this.grass = this.add.tileSprite(0, 0, 720, 640, 'grass').setOrigin(0, 0);
-        //this.fence = this.add.tileSprite(0, 0, 720, 640, 'fence').setOrigin(0, 0);
+        this.fence = this.add.tileSprite(0, 0, 720, 640, 'fence').setOrigin(0, 0);
+        //this.pond = this.add.tileSprite(0, 0, 720, 640, 'pond').setOrigin(0, 0);
+        //this.tree = this.add.tileSprite(0, 0, 720, 640, 'tree').setOrigin(0, 0);
 
         // ANIMATIONS
+
+        if (!this.anims.exists('idle')) {
+        // PLAYER
         this.anims.create({
             key: 'idle',
             frames: this.anims.generateFrameNumbers('dog_idle', {start: 0, end: 1, first: 0}),
             frameRate: 3,
             repeat: -1
         });
-
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('dog_walk', {start: 0, end: 1, first: 0}),
             frameRate: 3,
             repeat: -1
         });
-
         this.anims.create({
             key: 'dig',
             frames: this.anims.generateFrameNumbers('dog_dig', {start: 0, end: 2, first: 0}),
             frameRate: 3,
             repeat: 2
         });
+        this.anims.create({
+            key: 'bark',
+            frames: this.anims.generateFrameNumbers('dog_bark', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: 3
+        });
 
+        // BROWN DOG
+        this.anims.create({
+            key: 'idle2',
+            frames: this.anims.generateFrameNumbers('dog2_idle', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'walk2',
+            frames: this.anims.generateFrameNumbers('dog2_walk', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'bark2',
+            frames: this.anims.generateFrameNumbers('dog2_bark', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: 3
+        });
+
+        // BEIGE DOG
+        this.anims.create({
+            key: 'idle3',
+            frames: this.anims.generateFrameNumbers('dog3_idle', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'walk3',
+            frames: this.anims.generateFrameNumbers('dog3_walk', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'bark3',
+            frames: this.anims.generateFrameNumbers('dog3_bark', {start: 0, end: 1, first: 0}),
+            frameRate: 3,
+            repeat: 3
+        });
+        
+
+        // EXTRA
         this.anims.create({
             key: 'alert',
             frames: this.anims.generateFrameNumbers('question_mark', {start: 0, end: 2, first: 0}),
             frameRate: 3,
         });
+        }
 
         // SOUNDS
         this.footsteps = this.sound.add("footsteps", {
@@ -67,7 +134,7 @@ class Play extends Phaser.Scene {
 
         this.alert = this.sound.add("bark_4", {
             volume: 0.5,
-        })
+        });
 
         this.dig = this.sound.add("digging", {
             volume: 1
@@ -75,15 +142,28 @@ class Play extends Phaser.Scene {
 
         this.victory = this.sound.add("victory", {
             volume: 0.5
-        })
+        });
 
         this.badItem = this.sound.add("bad_item", {
             volume: 1,
-        })
+        });
+
+        this.bark1 = this.sound.add("bark_1", {
+            volume: 1
+        });
+
+        this.bark2 = this.sound.add("bark_2", {
+            volume: 1
+        });
+
+        this.bark3 = this.sound.add("bark_3", {
+            volume: 1
+        });
 
         // CONTROLS
         cursors = this.input.keyboard.createCursorKeys();
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         // TREASURES
         this.treasures = [];
@@ -104,21 +184,42 @@ class Play extends Phaser.Scene {
             this.treasures[i].found = false;
             this.treasures[i].near = false;
             this.treasures[i].x = Math.floor(Math.random() * 500) + 75;
-            this.treasures[i].y = Math.floor(Math.random() * 500) + 75;
+            this.treasures[i].y = Math.floor(Math.random() * 450) + 150;
         }
         //this.treasure.onOverlap = true;
         //this.nearTreasure = false;
         //this.treasuresNear = 0;
         
+        this.pond = this.add.tileSprite(0, 0, 720, 640, 'pond').setOrigin(0, 0);
 
         // PLAYER
-        this.player = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, 'dog_idle');
+        this.player = this.physics.add.sprite(game.config.width / 2, 50, 'dog_idle');
         this.moveSpeed = 100;
         this.walking = false;
         this.player.setCollideWorldBounds(true);
         this.digging = false;
+        this.distracted = false;
         //this.player.onOverlap = true;
         //this.player.anims.play('idle');
+
+        // BROWN DOG
+        this.dog1 = this.physics.add.sprite(100, 500, 'dog2_idle');
+        this.dog1.anims.play('idle2');
+        this.dog1.alerted = false;
+        this.dog1.body.immovable = true;
+        this.dog1.moveSpeed = 100;
+        this.dog1.direction = 1;
+        this.dog1.idle = false;
+
+        // BEIGE DOG
+        this.dog2 = this.physics.add.sprite(630, 170, 'dog3_idle');
+        this.dog2.anims.play('idle3');
+        this.dog2.alerted = false;
+        this.dog2.body.immovable = true;
+        this.dog2.moveSpeed = 100;
+        this.dog2.direction = -1;
+        this.dog2.flipX = true;
+        this.dog2.idle = false;
 
         // ALERT
         this.notif = this.add.sprite(this.player.x, this.player.y - this.player.height, 'question_mark');
@@ -129,14 +230,47 @@ class Play extends Phaser.Scene {
         }, null, this);
 
         // COLLISION
-        //this.physics.add.collider(this.player, this.treasure);
+        //this.physics.add.collider(this.player, this.dog1);
         //this.physics.world.on('overlap', () => {console.log('gah')});
 
         //this.treasure = this.physics.add.sprite(game.config.width / 2 + 200, game.config.height / 2, 'foodbowl')
 
+        // TREE BASE
+        this.stump = this.physics.add.sprite(150, 290, 'dirt');
+        this.stump.alpha = 0;
+        this.stump.body.immovable = true;
+        this.physics.add.collider(this.player, this.stump);
+        this.tree = this.add.tileSprite(0, 0, 720, 640, 'tree').setOrigin(0, 0);
+
+        this.clock = this.time.delayedCall(60000, () => {this.Lose()}, null, this);
+
+        let gameConfig = {
+            fontFamily: 'Courier',
+            fontSize: '18px',
+            color: '#000000',
+            backgroundColor: '#FFFFFF',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        };
+        this.timeDisplay = this.add.text(game.config.width - 285, 10, "PARK CLOSES IN "+this.clock.delay / 1000+" SECONDS", gameConfig);
+        this.escText = this.add.text(10, 10, "(ESC) TO RETURN TO MENU", gameConfig);
+
+        this.gameOver = false;
+    
     }
 
     update() {
+        if (!this.gameOver) {
+            this.timeDisplay.text = "PARK CLOSES IN "+Math.ceil((this.clock.delay - this.clock.elapsed) / 1000)+" SECONDS";
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(keyESC)) {
+            this.scene.start('menuScene');
+        }
 
         //this.player.anims.play('idle');
         //this.player.update();
@@ -144,8 +278,9 @@ class Play extends Phaser.Scene {
         //this.movingY = false;
 
         // PLAYER CONTROL
+        if (!this.gameOver) {
         let playerDirection = new Phaser.Math.Vector2(0, 0);
-        if (!this.digging) {
+        if (!this.digging && !this.player.distracted) {
         if(cursors.left.isDown) {
             playerDirection.x = -1;
             this.player.setFlip(true, false);
@@ -175,12 +310,132 @@ class Play extends Phaser.Scene {
         }
         playerDirection.normalize();
         this.player.setVelocity(playerDirection.x * this.moveSpeed, playerDirection.y * this.moveSpeed);
+        }
 
-        // COLLISION CHECKING
-        //this.physics.world.on('collide', alert);
+        // BROWN DOG UPDATE
+        if (!this.dog1.alerted) {
+            if (this.dog1.moveSpeed != 0) {
+                this.dog1.anims.play('walk2', true);
+                this.dog1.setVelocity(this.dog1.direction * this.dog1.moveSpeed, 0);
+                this.dog1.flipX = this.dog1.direction * this.dog1.moveSpeed < 1 ? true : false;
+            } else {
+                this.dog1.anims.play('idle2', true);
+            }
+            if (this.dog1.x > 320) {
+                if (this.dog1.moveSpeed != 0 && this.dog1.direction == 1) {
+                    this.dog1.moveSpeed = 0;
+                    this.dog1.setVelocity(0, 0);
+                    this.dog1.idle = true;
+                }
+            } else if (this.dog1.x < 75) {
+                if (this.dog1.moveSpeed != 0 && this.dog1.direction == -1) {
+                    this.dog1.moveSpeed = 0;
+                    this.dog1.setVelocity(0, 0);
+                    this.dog1.idle = true;
+                }
+            }
+            if (this.dog1.idle) {
+                this.dog1.idle = false;
+                this.dog1delay = this.time.delayedCall(5000, () => {
+                    this.dog1.direction = this.dog1.direction == 1 ? -1 : 1;
+                    this.dog1.moveSpeed = 100;
+                    this.dog1.flipX = this.dog1.direction == 1 ? false : true;
+                }, null, this);
+            }   
+        }
+        if (this.checkNear(this.player, this.dog1) && !this.dog1.alerted) {
+            if (this.dog1.x > this.player.x) {
+                this.dog1.setFlip(true, false);
+                if (this.player.flipX == true) {
+                    this.player.flipX = false;
+                }
+            } else if (this.player.flipX == false) {
+                this.player.flipX = true;
+            }
+            this.dog1.setVelocity(0, 0);
+            this.dog1.alerted = true;
+            this.dog1.anims.play('bark2', true);
+            this.bark3.play();
 
+            this.player.distracted = true;
+            this.player.anims.play('bark', true);
+            this.footsteps.stop();
+            this.alert.play();
+
+            this.stunTime = this.time.delayedCall(3000, () => {
+                this.player.distracted = false;
+                this.dog1.anims.play('idle2', true);
+            }, null, this);
+            this.stunTime = this.time.delayedCall(6000, () => {
+                this.dog1.alerted = false;
+            }, null, this);
+
+        }
+
+        // BEIGE DOG UPDATE
+        if (!this.dog2.alerted) {
+            if (this.dog2.moveSpeed != 0) {
+                this.dog2.anims.play('walk3', true);
+                this.dog2.setVelocity(this.dog2.direction * this.dog2.moveSpeed, 0);
+                this.dog2.flipX = this.dog2.direction * this.dog2.moveSpeed < 1 ? true : false;
+            } else {
+                this.dog2.anims.play('idle3', true);
+            }
+            if (this.dog2.x > 630) {
+                if (this.dog2.moveSpeed != 0 && this.dog2.direction == 1) {
+                    this.dog2.moveSpeed = 0;
+                    this.dog2.setVelocity(0, 0);
+                    this.dog2.idle = true;
+                }
+            } else if (this.dog2.x < 75) {
+                if (this.dog2.moveSpeed != 0 && this.dog2.direction == -1) {
+                    this.dog2.moveSpeed = 0;
+                    this.dog2.setVelocity(0, 0);
+                    this.dog2.idle = true;
+                }
+            }
+            if (this.dog2.idle) {
+                this.dog2.idle = false;
+                this.dog2delay = this.time.delayedCall(5000, () => {
+                    this.dog2.direction = this.dog2.direction == 1 ? -1 : 1;
+                    this.dog2.moveSpeed = 100;
+                    this.dog2.flipX = this.dog2.direction == 1 ? false : true;
+                }, null, this);
+            }   
+        }
+        if (this.checkNear(this.player, this.dog2) && !this.dog2.alerted) {
+            if (this.dog2.x > this.player.x) {
+                this.dog2.setFlip(true, false);
+                if (this.player.flipX == true) {
+                    this.player.flipX = false;
+                }
+            } else if (this.player.flipX == false) {
+                this.player.flipX = true;
+            }
+            this.dog2.setVelocity(0, 0);
+            this.dog2.alerted = true;
+            this.dog2.anims.play('bark3', true);
+            this.bark3.play();
+
+            this.player.distracted = true;
+            this.player.anims.play('bark', true);
+            this.footsteps.stop();
+            this.alert.play();
+
+            this.stunTime = this.time.delayedCall(3000, () => {
+                this.player.distracted = false;
+                this.dog2.anims.play('idle3', true);
+            }, null, this);
+            this.stunTime = this.time.delayedCall(6000, () => {
+                this.dog2.alerted = false;
+            }, null, this);
+
+        }
+
+
+        // TREASURE UPDATING
         for (let i = 0; i < this.treasures.length; i++) {
-        if (this.checkCollision(this.player, this.treasures[i]) && !this.treasures[i].found) {
+        if (!this.player.distracted && this.checkCollision(this.player, this.treasures[i]) && !this.treasures[i].found) {
             if (!this.treasures[i].near) {
                 this.alert.play();
                 this.treasures[i].near = true;
@@ -197,11 +452,12 @@ class Play extends Phaser.Scene {
                 this.player.anims.play('dig', true);
                 //this.player.body.immovable = true;
                 this.digging = true;
-                this.clock = this.time.delayedCall(1500, () => {
+                this.treasures[i].found = true;
+                this.digTime = this.time.delayedCall(1500, () => {
                     //console.log('bruh');
                     this.digging = false;
                     this.treasures[i].alpha = 1;
-                    this.treasures[i].found = true;
+                    //this.treasures[i].found = true;
                     //this.nearTreasure = false;
                     this.treasures[i].near = false;
                     //this.player.body.immovable = false;
@@ -209,6 +465,7 @@ class Play extends Phaser.Scene {
                     this.currentTreasure = this.add.sprite(this.player.x, this.player.y - this.player.height / 1.5, this.treasures[i].identity);
                     if (this.treasures[i].identity == 'bone') {
                         this.victory.play();
+                        this.Win();
                     } else {
                         this.badItem.play();
                     }
@@ -237,11 +494,11 @@ class Play extends Phaser.Scene {
     }
 
     Win() {
-
+        this.gameOver = true;
     }
 
     Lose() {
-
+        this.gameOver = true;
     }
 
     checkCollision(player, treasure) {
@@ -249,6 +506,17 @@ class Play extends Phaser.Scene {
             player.x + player.width > treasure.x &&
             player.y < treasure.y + treasure.height &&
             player.height + player.y > treasure.y) {
+                return true;
+            } else {
+                return false;
+            }
+    }
+
+    checkNear(player, treasure) {
+        if (player.x < treasure.x + treasure.width + 10 &&
+            player.x + player.width > treasure.x - 10 &&
+            player.y < treasure.y + treasure.height + 10 &&
+            player.height + player.y > treasure.y - 10) {
                 return true;
             } else {
                 return false;
